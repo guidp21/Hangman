@@ -1,6 +1,1 @@
-# Hi
-
-# Hello
-
-# New branch
-
+# Hangman game is comming!
