@@ -24,7 +24,7 @@ class Hangman:
         while "-" in random_word and " " in random_word: 
             random_word = choice(WORDS)
 
-        return random_word
+        return random_word.upper()
     
     def input_letter(self): # input users attempt
         while True:
@@ -33,10 +33,6 @@ class Hangman:
             # if it's in the alphabet and hasn't been used yet
             if letter_input in self.alphabet - self.used_letters:
                 self.used_letters.add(letter_input)
-
-                # right letter
-                if letter_input in self.word_letters:
-                    self.word_letters.remove(letter_input)
 
                 return letter_input
             
@@ -47,6 +43,36 @@ class Hangman:
             # number
             else:
                 print("Invalid input! Try again.")
+    
+    def analyse_input_letter(self, letter_input):
+        print(f"{letter_input} {self.word_letters}")
+        # right letter
+        if letter_input in self.word_letters:
+            self.word_letters.remove(letter_input)
+            print("right letter")
+            
+        # wrong letter
+        else:
+            self.life -= 1
+            print("wrong letter")
+    
+    def check_game_status(self): # check victory or defeat
+        # playing
+        if self.life > 0:
+
+            # victory
+            if len(self.word_letters) == 0:
+                print("You won")
+                return False
+            
+            # still playing
+            else:
+                return True
+
+        # defeat
+        else:
+            print("You lost!")
+            return False
             
 
     
