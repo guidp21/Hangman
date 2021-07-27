@@ -1,10 +1,12 @@
 from hangman import *
 
-HANGMAN = Hangman("words.json")
+HANGMAN = Hangman()
 
 def main():
-    word = HANGMAN.choose_word()
-    print(word)
+    print(HANGMAN.word)
+    print(HANGMAN.word_letters)
+    HANGMAN.input_letter()
+    
 
 if __name__ == '__main__':
     main()
