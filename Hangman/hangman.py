@@ -34,8 +34,17 @@ class Hangman:
             if letter_input in self.alphabet - self.used_letters:
                 self.used_letters.add(letter_input)
 
+                # right letter
+                if letter_input in self.word_letters:
+                    self.word_letters.remove(letter_input)
+
                 return letter_input
             
+            # letter has already been already used
+            elif letter_input in self.used_letters:
+                print("You have already used this letter. Please try again.")
+            
+            # number
             else:
                 print("Invalid input! Try again.")
             
