@@ -9,7 +9,7 @@ class Hangman:
         self.life = 10
         self.alphabet = set(string.ascii_uppercase)
         self.word = self.get_word()
-        self.word_letters = set(self.word)
+        self.word_letters = list(self.word)
         self.used_letters = set()
 
     def load_words(self): # load all the words of the words file
@@ -50,7 +50,7 @@ class Hangman:
         if letter_input in self.word_letters:
             self.word_letters.remove(letter_input)
             print("right letter")
-            
+
         # wrong letter
         else:
             self.life -= 1
@@ -73,6 +73,26 @@ class Hangman:
         else:
             print("You lost!")
             return False
+    
+    def used_letters_indicator(self): # show the user which letters were used
+        if len(self.used_letters) > 0:
+            print("You had used these letters: ", " ".join(self.used_letters))
+        else:
+            print("You hadn't used any letter yet.")
+    
+    def current_word(self): # # show the user the word he's trying to guess
+        word_list = list()
+
+        for letter in self.word:
+
+            if letter in self.used_letters:
+                word_list.append(letter)
+            else:
+                word_list.append("_")
+
+        print("Current word: ", " ".join(word_list))
+
+
             
 
     
