@@ -1,6 +1,8 @@
 import json
 from random import choice
 import string
+import os
+from time import sleep
 
 class Hangman:
 
@@ -11,6 +13,27 @@ class Hangman:
         self.word = self.get_word()
         self.word_letters = list(self.word)
         self.used_letters = set()
+
+    def used_letters_indicator(self): # show the user which letters were used
+        if len(self.used_letters) > 0:
+            print("You had used these letters: ", " ".join(self.used_letters))
+        else:
+            print("You hadn't used any letter yet.")
+    
+    def current_word(self): # show the user the word he's trying to guess
+        word_list = list()
+
+        for letter in self.word:
+
+            if letter in self.used_letters:
+                word_list.append(letter)
+            else:
+                word_list.append("_")
+
+        print("Current word: ", " ".join(word_list))
+    
+    def life_indicator(self): # show the user's life
+        print(f"Life: {self.life}")
 
     def load_words(self): # load all the words of the words file
         with open(self.WORDS_FILE, 'r') as f:
@@ -45,16 +68,13 @@ class Hangman:
                 print("Invalid input! Try again.")
     
     def analyse_input_letter(self, letter_input):
-        print(f"{letter_input} {self.word_letters}")
         # right letter
         if letter_input in self.word_letters:
             self.word_letters.remove(letter_input)
-            print("right letter")
 
         # wrong letter
         else:
             self.life -= 1
-            print("wrong letter")
     
     def check_game_status(self): # check victory or defeat
         # playing
@@ -62,7 +82,8 @@ class Hangman:
 
             # victory
             if len(self.word_letters) == 0:
-                print("You won")
+                print(self.word)
+                print("You WON! Great job!")
                 return False
             
             # still playing
@@ -71,27 +92,14 @@ class Hangman:
 
         # defeat
         else:
-            print("You lost!")
+            print(self.word)
+            print("You LOST! Bad luck bro...")
             return False
     
-    def used_letters_indicator(self): # show the user which letters were used
-        if len(self.used_letters) > 0:
-            print("You had used these letters: ", " ".join(self.used_letters))
-        else:
-            print("You hadn't used any letter yet.")
+    @staticmethod
+    def refresh_cmd():
+        os.system("cls")
     
-    def current_word(self): # # show the user the word he's trying to guess
-        word_list = list()
-
-        for letter in self.word:
-
-            if letter in self.used_letters:
-                word_list.append(letter)
-            else:
-                word_list.append("_")
-
-        print("Current word: ", " ".join(word_list))
-
 
             
 
